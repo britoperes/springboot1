@@ -38,15 +38,15 @@ public class TopicosController {
 		}
 	}
 	
+	
 	@PostMapping
-	//Não é uma boa prática retornar void em metodos da api
-	//O correto é retornar um ResponseEntity, ficando atendo aos dados que cada método retorna
-	//Um exemplo é o 201, cadastrado, que retorna uma uri e o body do que foi cadastrado
-	public ResponseEntity<TopicoDto> cadastra(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
+	//Um comentário sobre o cadastro de informações: A cada cadastro realizado com sucesso, retorno 201, a uri do cara cadastrado e
+	//um exemplo de como ficou o cadastro
+	public ResponseEntity<TopicoDto> cadastra(@RequestBody TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
 		Topico topico = topicoForm.converter(cursoRepository);
 		topicoRepository.save(topico);
-		URI uri = uriBuilder.path("/topico/{id}").buildAndExpand(topico.getId()).toUri();
-		return  ResponseEntity.created(uri).body(new TopicoDto(topico));
+		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
+		return ResponseEntity.created(uri).body(new TopicoDto(topico));
 	}
 		
 }
