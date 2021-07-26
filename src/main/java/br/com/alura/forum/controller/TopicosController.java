@@ -42,11 +42,12 @@ public class TopicosController {
 	@PostMapping
 	//Um comentário sobre o cadastro de informações: A cada cadastro realizado com sucesso, retorno 201, a uri do cara cadastrado e
 	//um exemplo de como ficou o cadastro
-	public ResponseEntity<TopicoDto> cadastra(@RequestBody TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<TopicoDto> cadastra(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
 		Topico topico = topicoForm.converter(cursoRepository);
 		topicoRepository.save(topico);
 		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
 		return ResponseEntity.created(uri).body(new TopicoDto(topico));
+		
 	}
 		
 }
